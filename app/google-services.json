@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "395320514868",
+    "firebase_url": "https://apeye-5c2e4.firebaseio.com",
+    "project_id": "apeye-5c2e4",
+    "storage_bucket": "apeye-5c2e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395320514868:android:d4fe81f169851a55",
+        "android_client_info": {
+          "package_name": "com.example.apeye"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395320514868-f6k3s30doju11ektcjjlqvp2u5um2pb7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.apeye",
+            "certificate_hash": "e90dd3b363d73d53a665b1649cc8a945aa359491"
+          }
+        },
+        {
+          "client_id": "395320514868-pgln62u74ge867da6hnmdhkgpsufgl9f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.apeye",
+            "certificate_hash": "d73d1d6c44f3e61f98854ba43206c52da73f4aec"
+          }
+        },
+        {
+          "client_id": "395320514868-3u569pbva33groechoiu9gbc661e0ioj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKznx5lSH66A_Bmbqzgsq_XVjFVEIyPEo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "395320514868-3u569pbva33groechoiu9gbc661e0ioj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

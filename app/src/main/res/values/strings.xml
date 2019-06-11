@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">AP-Eye</string>
+    <string name="Camera">Check Plant</string>
+    <string name="Community">Community</string>
+    <string name="library">Library</string>
+    <string name="enter_your_password">Password</string>
+    <string name="enter_your_email"> Email</string>
+    <string name="login">LOGIN</string>
+    <string name="or">or</string>
+    <string name="need_new_account">Need new Account ?</string>
+    <string name="community">Community</string>
+    <string name="welcome_to">Welcome To</string>
+    <string name="Search_com">Search</string>
+    <string name="acc_settings">Account Settings</string>
+    <string name="logout_com">Logout</string>
+    <string name="create_account">Create Account</string>
+    <string name="name">Name</string>
+    <string name="Save">Save</string>
+    <string name="apeye">AP-Eye</string>
+    <string name="user">User</string>
+    <string name="Post">Post</string>
+    <string name="write_description">Write Description…</string>
+    <string name="guest">Guest</string>
+    <string name="signup">SIGNUP</string>
+    <string name="user_info">User Information</string>
+    <string name="ask_community">ASK COMMUNITY</string>
+    <string name="add_photo">Add image</string>
+    <string name="skip">SKIP</string>
+</resources>
+
