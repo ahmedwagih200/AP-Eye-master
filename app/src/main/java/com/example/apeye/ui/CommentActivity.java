@@ -1,19 +1,15 @@
 package com.example.apeye.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.apeye.R;
-import com.example.apeye.adapters.Comment_Adapter;
+import com.example.apeye.adapters.CommentAdapter;
 import com.example.apeye.model.Comment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,25 +32,40 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentActivity extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore;
     private List<Comment> commentList;
-    private Comment_Adapter comment_adapter;
+    private CommentAdapter comment_adapter;
     private String current_user_id;
     private String postID;
     private EditText comment_field;
     private CircleImageView circleImageView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comment_activity);
 
-        final Button write_comment = findViewById(R.id.write_comment);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.comments);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+        final ImageView write_comment = findViewById(R.id.write_comment);
         comment_field =findViewById(R.id.comment_text);
+
+
+
         RecyclerView recyclerView = findViewById(R.id.comment_list);
         circleImageView = findViewById(R.id.comment_image);
 
@@ -64,9 +75,10 @@ public class CommentActivity extends AppCompatActivity {
         postID = getIntent().getStringExtra("Post_ID");
 
         commentList = new ArrayList<>();
-        comment_adapter =new Comment_Adapter(commentList);
+        comment_adapter =new CommentAdapter(commentList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(comment_adapter);
+
         recyclerView.setHasFixedSize(true);
 
         firebaseFirestore.collection("Posts/" + postID + "/Comments").orderBy("date", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -86,6 +98,7 @@ public class CommentActivity extends AppCompatActivity {
                             }
 
                         }
+
 
                     }
 
@@ -135,6 +148,20 @@ public class CommentActivity extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case android.R.id.home:
+                this.finish();
+                break;
+            default:
+                break;
+        }
+        return true;
+
     }
 }
 

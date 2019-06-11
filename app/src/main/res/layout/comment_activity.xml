@@ -5,16 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.CommentActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ToolbarColoredBackArrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    </androidx.appcompat.widget.Toolbar>
 
-    <Button
-        android:id="@+id/write_comment"
+    <!--<TextView-->
+        <!--android:id="@+id/text_no_comments"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:text="@string/no_comments"-->
+        <!--android:textColor="@android:color/black"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/toolbar" />-->
+
+    <!--<ImageView-->
+        <!--android:id="@+id/img_no_comments"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:src="@drawable/ic_box"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/text_no_comments" />-->
+
+
+<ImageView
+    android:id="@+id/write_comment"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@android:drawable/ic_media_play"
-
-        android:backgroundTint="#FFFFFF"
+        android:src="@drawable/ic_send"
+        style="?android:actionButtonStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -39,10 +78,9 @@
         app:layout_constraintBottom_toTopOf="@+id/comment_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <EditText
-        android:textSize="15sp"
         android:id="@+id/comment_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -53,6 +91,7 @@
         android:gravity="start|top"
         android:hint="Write a comment ..."
         android:inputType="textMultiLine"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/write_comment"
         app:layout_constraintStart_toEndOf="@+id/comment_image" />

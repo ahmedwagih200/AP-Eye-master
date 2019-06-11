@@ -26,5 +26,7 @@
     <string name="ask_community">ASK COMMUNITY</string>
     <string name="add_photo">Add image</string>
     <string name="skip">SKIP</string>
+    <string name="comments">COMMENTS</string>
+    <string name="no_comments">No Comments</string>
 </resources>
 

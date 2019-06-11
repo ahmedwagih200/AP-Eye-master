@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/comment_item_user_image"
             android:layout_width="48dp"
@@ -25,17 +27,16 @@
             android:id="@+id/comment_item_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="13dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:inputType="textMultiLine"
             android:maxLines="4"
-            android:text="not realy"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.028"
-            app:layout_constraintStart_toEndOf="@+id/comment_item_user_name"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/comment_item_user_image"
+            tools:text="not realy" />
 
         <TextView
             android:id="@+id/comment_item_user_name"
@@ -44,6 +45,7 @@
             android:layout_marginTop="12dp"
             android:textColor="#000"
             android:textSize="15sp"
+            tools:text="Abdel-rahman"
             app:layout_constraintStart_toEndOf="@+id/comment_item_user_image"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,14 +54,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="4dp"
             android:text="11/6/2019"
             android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/comment_item_user_image" />
+            app:layout_constraintStart_toEndOf="@+id/comment_item_user_image"
+            app:layout_constraintTop_toBottomOf="@+id/comment_item_user_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

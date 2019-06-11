@@ -6,9 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.apeye.R;
 import com.example.apeye.model.Comment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,10 +17,12 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.CommentHolder> {
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentHolder> {
 
     private List<Comment> commentList;
 
@@ -33,10 +32,10 @@ public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.Commen
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.comment_item, parent, false);
 
-        return new Comment_Adapter.CommentHolder(itemView);
+        return new CommentAdapter.CommentHolder(itemView);
     }
 
-    public Comment_Adapter(List<Comment> comments){
+    public CommentAdapter(List<Comment> comments){
         commentList =comments;
     }
 
@@ -80,7 +79,7 @@ public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.Commen
         private TextView comment_user_name;
         private CircleImageView comment_image;
 
-            CommentHolder(@NonNull View itemView) {
+        CommentHolder(@NonNull View itemView) {
             super(itemView);
             comment_text = itemView.findViewById(R.id.comment_item_text);
             comment_image = itemView.findViewById(R.id.comment_item_user_image);
