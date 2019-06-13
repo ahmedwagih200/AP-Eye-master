@@ -23,14 +23,20 @@ import com.example.apeye.adapters.RecyclerPlantKindAdapter;
 import com.example.apeye.api.ApiService;
 import com.example.apeye.api.RetrofitBuilder;
 import com.example.apeye.model.ApiResponse;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -62,6 +68,9 @@ public class Fragment_Check extends Fragment implements Callback<ApiResponse> {
     private int[] mPlants;
     private ArrayList<String> mNames = new ArrayList<>();
     private RecyclerPlantKindAdapter adapter;
+    private FirebaseFirestore firebaseFirestore;
+    private FirebaseAuth firebaseAuth;
+
 
 
     @Nullable
@@ -71,6 +80,8 @@ public class Fragment_Check extends Fragment implements Callback<ApiResponse> {
         image = view.findViewById(R.id.image);
         progressBar = view.findViewById(R.id.progressBar);
         apiService = RetrofitBuilder.createService(ApiService.class);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         Button captureButton = view.findViewById(R.id.btnCapture);
         Button checkButton = view.findViewById(R.id.btnCheck);
         Button checkOffline = view.findViewById(R.id.tfliteButton);
@@ -164,6 +175,7 @@ public class Fragment_Check extends Fragment implements Callback<ApiResponse> {
                                 imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
+                                        //String userName = getUserName();
                                         uriPredict(uri,adapter.getSelected());
                                     }
                                 });
@@ -184,6 +196,32 @@ public class Fragment_Check extends Fragment implements Callback<ApiResponse> {
                 showErrorDialog(2);
             }
         }
+    }
+
+    private void getUserName(final URI uri, final String plantType) {
+        String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+
+        firebaseFirestore.collection("Users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+
+                    if(Objects.requireNonNull(task.getResult()).exists()){
+
+                        String userName = task.getResult().getString("name");
+                        //TODO : call the uriPredict method here and give it the username parameter as the third parameter.
+                        //TODO : DONT FORGET TO ADJUST THE REQUEST IN APISERVISE CLASS.
+                        //uriPredict(uri,plantType,userName);
+                    }
+
+                }else{
+
+                    String error = Objects.requireNonNull(task.getException()).getMessage();
+                    Log.e(TAG, "onComplete: "+error );
+                    Toast.makeText(getActivity(), "(FIRE_STORE Retrieve Error) : " + error, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void showErrorDialog(int i) {

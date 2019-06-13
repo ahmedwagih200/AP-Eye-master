@@ -38,10 +38,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-
             android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/post_profile_image"
-            app:layout_constraintTop_toBottomOf="@+id/post_user_name" />
+            app:layout_constraintTop_toBottomOf="@+id/post_user_name"
+            tools:ignore="SmallSp" />
 
         <ImageView
             android:id="@+id/post_image"
@@ -49,6 +49,7 @@
             android:layout_height="300dp"
             android:layout_marginTop="4dp"
             android:background="#CCCCCC"
+            android:contentDescription="@string/postImage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,9 +73,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp"
-            android:backgroundTint="@color/colorPrimaryDark"
+            android:backgroundTint="#cccc"
             android:fontFamily="sans-serif"
-            android:text="Comments"
+            android:text="@string/comments"
             app:cornerRadius="5dp"
             android:textAllCaps="false"
             android:textStyle="italic"
