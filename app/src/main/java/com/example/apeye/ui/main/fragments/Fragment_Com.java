@@ -116,7 +116,6 @@ public class Fragment_Com extends Fragment {
 
             case R.id.acc_setting:
                 Intent intent = new Intent(getContext(), UserInformation.class);
-                intent.putExtra("comingFrom",2);
                 startActivity(intent);
             default:
                 return false;

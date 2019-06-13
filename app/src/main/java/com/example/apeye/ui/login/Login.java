@@ -108,6 +108,7 @@ public class Login extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        MainActivity.FirstRun = true;
         startActivity(new Intent(Login.this, MainActivity.class));
         this.finish();
 
@@ -125,6 +126,7 @@ public class Login extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.action_gust:
+                MainActivity.FirstRun = true;
                 startActivity(new Intent(Login.this, MainActivity.class));
                 this.finish();
                 break;

@@ -28,5 +28,7 @@
     <string name="skip">SKIP</string>
     <string name="comments">COMMENTS</string>
     <string name="no_comments">No Comments</string>
+    <string name="userName">User Name</string>
+
 </resources>
 

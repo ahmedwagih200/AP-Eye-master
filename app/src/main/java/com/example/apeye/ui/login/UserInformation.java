@@ -6,12 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.apeye.R;
@@ -47,7 +47,6 @@ import id.zelory.compressor.Compressor;
 public class UserInformation extends AppCompatActivity {
 
     private static final String TAG = "User_Information";
-    public static boolean Data_check = true;
     private CircleImageView circleImage;
     private EditText userNameEditText;
     private String user_id;
@@ -55,30 +54,31 @@ public class UserInformation extends AppCompatActivity {
     private UploadTask uploadTask;
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
+    private TextView emailTextView;
     private Button saveButton;
     private FirebaseFirestore firebaseFirestore;
     private Uri CurrentImageURI = null;
     private boolean isChanged = false;
-    private int comingFrom; // 1 -> reg , 2 -> community
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_user__information);
-        Intent intent = getIntent();
-        comingFrom = intent.getIntExtra("comingFrom",2);
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.user_info);
-        if(comingFrom == 2)
-            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         MainActivity.FirstRun = false;
 
         progressBar = findViewById(R.id.progressBar);
-        userNameEditText =findViewById(R.id.user_name);
+        userNameEditText =findViewById(R.id.user_name_reg);
+        emailTextView =findViewById(R.id.email_text);
         saveButton = findViewById(R.id.save_button);
         circleImage = findViewById(R.id.user_pic);
+
         firebaseFirestore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -94,17 +94,18 @@ public class UserInformation extends AppCompatActivity {
 
                         String name = task.getResult().getString("name");
                         String image = task.getResult().getString("image");
+                        String email = task.getResult().getString("email");
 
-                        CurrentImageURI = Uri.parse(image);
+                        if(!TextUtils.isEmpty(image)){
+                            CurrentImageURI = Uri.parse(image);
+                        }
+
                         userNameEditText.setText(name);
-
-                        Picasso.get().load(image).resize(100,100).placeholder(R.drawable.defualtuser).error(R.drawable.defualtuser).into(circleImage);
+                        emailTextView.setText(email);
+                        Picasso.get().load(image).placeholder(R.drawable.defualtuser).error(R.drawable.defualtuser).into(circleImage);
                     }
                     else{
-
-                        // Toast.makeText(User_Information.this, "No data" , Toast.LENGTH_SHORT).show();
                         userNameEditText.setText(R.string.user);
-                        Data_check = false;
                     }
 
                 }else{
@@ -192,7 +193,7 @@ public class UserInformation extends AppCompatActivity {
 
                     }else{
 
-                        update_data("null",user_name);
+                        update_data(CurrentImageURI.toString(),user_name);
                     }
                 }
                 else {
@@ -219,7 +220,7 @@ public class UserInformation extends AppCompatActivity {
                     progressBar.setVisibility(View.INVISIBLE);
                     //Toast.makeText(User_Information.this, "Changes saved", Toast.LENGTH_SHORT).show();
                     Intent mainIntent = new Intent(UserInformation.this, MainActivity.class);
-                    mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                  //  mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mainIntent);
                     finish();
 
@@ -267,22 +268,12 @@ public class UserInformation extends AppCompatActivity {
     }
 
     private void goBackForCommunity() {
-        if(!Data_check)
-        {
-            update_data("null",userNameEditText.getText().toString());
-            Data_check =true;
-        }
         Intent mainIntent = new Intent(UserInformation.this, MainActivity.class);
-        mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      //  mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(mainIntent);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if(comingFrom == 1)
-            getMenuInflater().inflate(R.menu.menu_user_info, menu);
-        return true;
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

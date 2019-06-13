@@ -15,7 +15,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 public class RetrofitBuilder {
     // El-Kashef Base URL
     //http://3.219.62.232:8000/apeye/API/?
-    private static final String BASE_URL = "http://3.219.62.232:8000/apeye/API/";
+    private static final String BASE_URL = "http://3.219.62.232:8000/apeye/";
 
     // this olHttpClinet is for adding our custom Http headers
     private final static OkHttpClient clinet = buildClient();

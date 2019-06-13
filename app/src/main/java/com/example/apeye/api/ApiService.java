@@ -1,6 +1,7 @@
 package com.example.apeye.api;
 
 import com.example.apeye.model.ApiResponse;
+import com.example.apeye.model.ApiSignUpResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -12,8 +13,14 @@ import retrofit2.http.POST;
  */
 public interface ApiService {
 
-    @POST("?")
+    @POST("API/")
     @FormUrlEncoded
     Call<ApiResponse> classify(@Field("pathimage") String imgUrl,
                                @Field("Plant") String plantKind);
+
+    @POST("signupapi/")
+    @FormUrlEncoded
+    Call<ApiSignUpResponse> signUp(@Field("email") String email,
+                                   @Field("username") String userName,
+                                   @Field("password") String password);
 }

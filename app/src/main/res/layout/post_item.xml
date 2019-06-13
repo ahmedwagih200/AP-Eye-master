@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="14dp"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
     app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,17 +66,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/post_profile_image" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/comments_button"
             android:layout_width="wrap_content"
-            android:layout_height="37dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:backgroundTint="#cccc"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:fontFamily="sans-serif"
             android:text="Comments"
+            app:cornerRadius="5dp"
             android:textAllCaps="false"
-            android:textSize="13sp"
             android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/post_image" />
 
