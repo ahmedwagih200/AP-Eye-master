@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.example.apeye.R;
 import com.example.apeye.api.ApiService;
 import com.example.apeye.api.RetrofitBuilder;
-import com.example.apeye.model.ApiSignUpResponse;
+import com.example.apeye.model.ApiResultResponse;
 import com.example.apeye.ui.main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Reg extends AppCompatActivity implements Callback<ApiSignUpResponse> {
+public class Reg extends AppCompatActivity implements Callback<ApiResultResponse> {
     private static final String TAG = "Reg";
     private EditText reg_email_field;
     private EditText reg_pass_field;
@@ -93,7 +93,7 @@ public class Reg extends AppCompatActivity implements Callback<ApiSignUpResponse
 
     }
     private void signUpInServer(String email,String userName , String password) {
-        Call<ApiSignUpResponse> call = apiService.signUp(email,userName,password);
+        Call<ApiResultResponse> call = apiService.signUp(email,userName,password);
         call.enqueue(this);
     }
 
@@ -142,9 +142,9 @@ public class Reg extends AppCompatActivity implements Callback<ApiSignUpResponse
     }
 
     @Override
-    public void onResponse(Call<ApiSignUpResponse> call, Response<ApiSignUpResponse> response) {
+    public void onResponse(@NonNull Call<ApiResultResponse> call, @NonNull Response<ApiResultResponse> response) {
         if(response.isSuccessful()){
-            Log.e(TAG, "onResponse: "+response.body().getResult() );
+           // Log.e(TAG, "onResponse: "+response.body().getResult() );
             assert response.body() != null;
             if(response.body().getResult().equals("True")){
                 signUpInFirebase(userName,email,pass);
@@ -179,7 +179,7 @@ public class Reg extends AppCompatActivity implements Callback<ApiSignUpResponse
     }
 
     @Override
-    public void onFailure(Call<ApiSignUpResponse> call, Throwable t) {
+    public void onFailure(@NonNull Call<ApiResultResponse> call, @NonNull Throwable t) {
         Log.e(TAG, "onFailure: ."+t.getLocalizedMessage());
         toastErrorMessage(t.getLocalizedMessage());
        // progressBar.setVisibility(View.INVISIBLE);

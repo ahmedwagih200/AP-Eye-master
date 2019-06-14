@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,7 +37,6 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -70,7 +70,6 @@ public class Fragment_Check extends Fragment implements Callback<ApiResponse> {
     private RecyclerPlantKindAdapter adapter;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
-
 
 
     @Nullable
@@ -163,7 +162,7 @@ public class Fragment_Check extends Fragment implements Callback<ApiResponse> {
 
     private void uploadImage() {
         if (adapter.getSelected() == null) {
-            showErrorDialog(1);
+            showErrorDialog("Please pick the plant type first");
         } else {
             if (imageBytes != null) {
                 progressBar.setVisibility(View.VISIBLE);
@@ -175,8 +174,7 @@ public class Fragment_Check extends Fragment implements Callback<ApiResponse> {
                                 imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        //String userName = getUserName();
-                                        uriPredict(uri,adapter.getSelected());
+                                        predict(uri, adapter.getSelected());
                                     }
                                 });
 
@@ -193,61 +191,56 @@ public class Fragment_Check extends Fragment implements Callback<ApiResponse> {
 
 
             } else {
-                showErrorDialog(2);
+                showErrorDialog("Please Capture image to check");
             }
         }
     }
 
-    private void getUserName(final URI uri, final String plantType) {
-        String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+    private void predict(final Uri uri, final String plantType) {
 
-        firebaseFirestore.collection("Users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+            firebaseFirestore.collection("Users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
 
-                    if(Objects.requireNonNull(task.getResult()).exists()){
+                        if (Objects.requireNonNull(task.getResult()).exists()) {
 
-                        String userName = task.getResult().getString("name");
-                        //TODO : call the uriPredict method here and give it the username parameter as the third parameter.
-                        //TODO : DONT FORGET TO ADJUST THE REQUEST IN APISERVISE CLASS.
-                        //uriPredict(uri,plantType,userName);
+                            String userName = task.getResult().getString("name");
+                            uriPredict(uri, plantType, userName);
+                        }
+
+                    } else {
+
+                        String error = Objects.requireNonNull(task.getException()).getMessage();
+                        Log.e(TAG, "onComplete: " + error);
+                        Toast.makeText(getActivity(), "(FIRE_STORE Retrieve Error) : " + error, Toast.LENGTH_LONG).show();
                     }
-
-                }else{
-
-                    String error = Objects.requireNonNull(task.getException()).getMessage();
-                    Log.e(TAG, "onComplete: "+error );
-                    Toast.makeText(getActivity(), "(FIRE_STORE Retrieve Error) : " + error, Toast.LENGTH_LONG).show();
                 }
-            }
-        });
-    }
-
-    private void showErrorDialog(int i) {
-        if (i == 1) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
-            builder.setMessage("Please pick the plant type first")
-                    .setCancelable(true)
-                    .setTitle("We are Sorry")
-                    .setIcon(R.drawable.ic_confused);
-            AlertDialog alert = builder.create();
-            alert.show();
-        } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
-            builder.setMessage("Please Capture image to check")
-                    .setCancelable(true)
-                    .setTitle("We are Sorry")
-                    .setIcon(R.drawable.ic_confused);
-            AlertDialog alert = builder.create();
-            alert.show();
+            });
+        }else{
+            uriPredict(uri, plantType, "spy");
         }
+    }
+
+    private void showErrorDialog(String message) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
+            builder.setMessage(message)
+                    .setCancelable(true)
+                    .setTitle("We are Sorry")
+                    .setIcon(R.drawable.ic_confused);
+            AlertDialog alert = builder.create();
+            alert.show();
+
 
 
     }
 
-    private void uriPredict(Uri uri,String type) {
-        Call<ApiResponse> call = apiService.classify(uri.toString(), type);
+    private void uriPredict(Uri uri, String type, String userName) {
+        Log.e(TAG, "uriPredict: type = " + type + " username = " + userName);
+        Call<ApiResponse> call = apiService.classify(uri.toString(), type, userName);
         call.enqueue(this);
     }
 
@@ -277,7 +270,7 @@ public class Fragment_Check extends Fragment implements Callback<ApiResponse> {
     public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
         if (response.isSuccessful()) {
             assert response.body() != null;
-            Log.e(TAG, "onResponse: " + response.body().getFlowers().get(0));
+            //Log.e(TAG, "onResponse: " + new Gson().toJson(response.body()));
             textPrediction.setVisibility(View.VISIBLE);
             textPrediction.setText(response.body().getFlowers().get(0) + " with acc : " + response.body().getPred().get(0));
             Toast.makeText(getActivity(), response.body().getFlowers().get(0), Toast.LENGTH_SHORT).show();

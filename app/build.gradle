@@ -63,4 +63,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
     //compressor
     implementation 'id.zelory:compressor:2.1.0'
+    //Chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
 }

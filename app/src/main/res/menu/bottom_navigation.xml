@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_view_week_black_24dp"
         android:title="@string/library" />
 
+    <item
+        android:id="@+id/nav_analysis"
+        android:icon="@drawable/ic_analysis"
+        android:title="@string/analysis" />
+
 </menu>

@@ -30,6 +30,12 @@
     <string name="no_comments">No Comments</string>
     <string name="userName">User Name</string>
     <string name="postImage">image of the post</string>
+    <string name="analysis">Analysis</string>
+    <string name="time">date</string>
+    <string name="plantType">Plant</string>
+    <string name="signIn">Sign in</string>
+    <string name="chooseTime">Choose Time</string>
+    <string name="choosePlant">Choose Plant</string>
 
 </resources>
 

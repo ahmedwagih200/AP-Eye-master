@@ -5,7 +5,7 @@ import com.squareup.moshi.Json;
 /**
  * Created by Abdel-Rahman El-Shikh on 13-Jun-19.
  */
-public class ApiSignUpResponse {
+public class ApiResultResponse {
 
     @Json(name = "Result")
     private String result;

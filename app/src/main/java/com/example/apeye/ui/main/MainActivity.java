@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.example.apeye.R;
 import com.example.apeye.ui.login.Login;
 import com.example.apeye.ui.login.UserInformation;
+import com.example.apeye.ui.main.fragments.FragmentAnalysis;
 import com.example.apeye.ui.main.fragments.Fragment_Check;
 import com.example.apeye.ui.main.fragments.Fragment_Com;
 import com.example.apeye.ui.main.fragments.Fragment_Lib;
@@ -21,12 +22,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-
-import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -82,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.nav_lib:
                             selectedFragment = new Fragment_Lib();
                             break;
+                        case R.id.nav_analysis:
+                            selectedFragment = new FragmentAnalysis();
+                            break;
                     }
 
                     assert selectedFragment != null;
@@ -114,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             getMenuInflater().inflate(R.menu.com_menu, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.menu_signin, menu);
         }
         return true;
     }
@@ -129,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.acc_setting:
                 Intent intent = new Intent(MainActivity.this, UserInformation.class);
                 startActivity(intent);
+            case R.id.signIn:
+                sendToLogin();
             default:
                 return false;
         }
@@ -136,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void logout() {
         firebaseAuth.signOut();
-
         sendToLogin();
     }
 
