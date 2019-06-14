@@ -69,6 +69,7 @@
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorPrimaryDark"
         android:text="offline"
+        android:visibility="gone"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnCheck"

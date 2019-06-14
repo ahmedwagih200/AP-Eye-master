@@ -49,8 +49,7 @@ public class FragmentAnalysis extends Fragment implements Callback<ApiResultResp
     private String plant = "";
     private ApiService apiService;
     private BarChart barChart;
-    private ArrayList<String> xAxis = new ArrayList<>();
-    private ArrayList<BarEntry> chartData = new ArrayList<>();
+
     private ImageView imgAnalysis;
     private ProgressBar progressBar;
 
@@ -135,6 +134,7 @@ public class FragmentAnalysis extends Fragment implements Callback<ApiResultResp
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(time) && !TextUtils.isEmpty(plant)) {
+                    barChart.setVisibility(View.GONE);
                     analysis();
                 } else {
                     showErrorDialog("Please chose both time and plant to make analysis.");
@@ -210,7 +210,8 @@ public class FragmentAnalysis extends Fragment implements Callback<ApiResultResp
     }
 
     private void makeChartByResponse(String mResponse) {
-
+         ArrayList<String> xAxis = new ArrayList<>();
+         ArrayList<BarEntry> chartData = new ArrayList<>();
         int p = 0;
         String[] separated = mResponse.split(",");
         for (String s : separated) {
@@ -228,8 +229,8 @@ public class FragmentAnalysis extends Fragment implements Callback<ApiResultResp
         BarData data = new BarData(xAxis, barDataSet);
         imgAnalysis.setVisibility(View.GONE);
         barChart.setVisibility(View.VISIBLE);
-        XAxis xAxis = barChart.getXAxis();
-        xAxis.setLabelsToSkip(0);
+        XAxis mXAxis = barChart.getXAxis();
+        mXAxis.setLabelsToSkip(0);
         Log.e(TAG, "makeChartByResponse: " + xAxis);
         barChart.setData(data);
         progressBar.setVisibility(View.GONE);
